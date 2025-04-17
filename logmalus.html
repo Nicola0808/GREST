@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Log Malus</title>
+</head>
+<body>
+  <h2>Registro Malus</h2>
+  <ul id="listaMalus"></ul>
+
+  <script>
+    const malus = JSON.parse(localStorage.getItem('logMalus')) || [];
+    const ul = document.getElementById('listaMalus');
+    malus.forEach(m => {
+      const li = document.createElement('li');
+      li.textContent = `${m.data} - ${m.nome} ha dato ${m.punti} punti a ${m.squadra} per: ${m.motivo}`;
+      ul.appendChild(li);
+    });
+  </script>
+</body>
+</html>

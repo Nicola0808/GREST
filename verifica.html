@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifica Accesso</title>
+  <style>
+    /* Reset di base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Corpo della pagina */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2; /* Colore chiaro per il fondo */
+      text-align: center;
+      color: #4B0082;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://cdn.pixabay.com/photo/2016/06/08/13/14/roman-1449872_960_720.jpg'); /* Immagine evocativa dell'antica Roma */
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Contenitore principale */
+    .container {
+      background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco con trasparenza */
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 60%;
+      text-align: center;
+    }
+
+    /* Titolo della pagina */
+    h2 {
+      font-size: 2.5em;
+      color: #FF6347;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      font-weight: bold;
+    }
+
+    /* Input personalizzati */
+    input[type="text"], input[type="password"] {
+      width: 80%;
+      padding: 12px;
+      margin: 15px 0;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: 2px solid #4B0082;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      outline: none;
+      border-color: #FF6347;
+    }
+
+    /* Pulsante personalizzato */
+    button {
+      background-color: #FF6347;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 15px 30px;
+      width: 60%;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #FF4500;
+      transform: scale(1.05); /* Leggero ingrandimento al passaggio del mouse */
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    /* Sezione delle emoji */
+    .emoji {
+      font-size: 1.8em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* Sezione con il logo o l'immagine di sfondo */
+    .logo {
+      font-size: 2.2em;
+      color: #FF6347;
+      margin-bottom: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Box di conferma della password */
+    .confirmation {
+      font-size: 1.2em;
+      color: #2e2e2e;
+      margin-top: 20px;
+    }
+
+    .error {
+      color: #FF0000; /* Rosso per l'accesso negato */
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .success {
+      color: #32CD32; /* Verde per l'accesso consentito */
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><span class="emoji">🛡️</span> Accesso Assegnazione Punti <span class="emoji">🛡️</span></h2>
+    <div class="logo">Benvenuto, Animatore!</div>
+    <input type="text" id="nome" placeholder="Il tuo nome" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="verifica()"><span class="emoji">🔑</span> Entra</button>
+    <div class="confirmation" id="confirmationMessage"></div>
+  </div>
+
+  <script>
+    function verifica() {
+      const nome = document.getElementById("nome").value;
+      const pass = document.getElementById("password").value;
+
+      if (pass === "Nicola") {
+        const log = JSON.parse(localStorage.getItem("logAccessi")) || [];
+        log.push({ nome, motivo: "Accesso a Assegnazione Punti", data: new Date().toLocaleString() });
+        localStorage.setItem("logAccessi", JSON.stringify(log));
+
+        // Messaggio di conferma per accesso corretto
+        document.getElementById('confirmationMessage').textContent = 'Accesso consentito!';
+        document.getElementById('confirmationMessage').classList.add('success');
+        document.getElementById('confirmationMessage').classList.remove('error');
+
+        // Vai alla pagina di Assegnazione Punti
+        setTimeout(() => location.href = "assegnazione.html", 2000); // Rimanda dopo 2 secondi
+      } else {
+        // Messaggio di errore per accesso negato
+        document.getElementById('confirmationMessage').textContent = 'Accesso negato!';
+        document.getElementById('confirmationMessage').classList.add('error');
+        document.getElementById('confirmationMessage').classList.remove('success');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assegnazione Punti - Grest</title>
+  <style>
+    /* Reset CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Impostazioni base */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8; /* Sfondo chiaro */
+      color: #4B0082;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      background-image: url('https://cdn.pixabay.com/photo/2017/12/27/10/47/rome-3041994_960_720.jpg'); 
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Titolo */
+    h2 {
+      font-size: 3em;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Design del contenitore */
+    .container {
+      background: rgba(255, 255, 255, 0.8); 
+      padding: 30px;
+      border-radius: 15px;
+      width: 60%;
+      text-align: left;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Pulsante */
+    button {
+      background-color: #FF6347;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 12px;
+      width: 100%;
+      font-size: 1.2em;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #FF4500;
+    }
+
+    /* Sezione malus */
+    #campoMalus {
+      display: none;
+      margin-top: 10px;
+    }
+
+    /* Input e select */
+    .container input, .container select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 1.2em;
+      border-radius: 12px;
+      border: 2px solid #FF6347;
+      background-color: #FFE4E1;
+      color: #FF6347;
+    }
+
+    /* Focus sugli input */
+    .container input:focus, .container select:focus {
+      outline: none;
+      border-color: #FF4500;
+    }
+
+    /* Icone e emoji */
+    .emoji {
+      font-size: 2.5em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .section-header {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-top: 20px;
+      text-decoration: underline;
+      color: #4B0082;
+    }
+  </style>
+</head>
+<body>
+  <h2>🛡️ Assegna o Togli Punti 🏛️</h2>
+  <div class="container">
+    <div class="section-header">⚔️ Seleziona la Squadra</div>
+    <select id="squadreMenu">
+      <optgroup label="Elementari" id="elementari"></optgroup>
+      <optgroup label="Medie" id="medie"></optgroup>
+    </select><br><br>
+
+    <div class="section-header">💰 Punti</div>
+    <input type="number" id="punti" placeholder="Punti"><br><br>
+
+    <div class="section-header">🧑‍🤝‍🧑 Assegnato da:</div>
+    <input type="text" id="nomeAssegnatore" placeholder="Chi assegna?"><br><br>
+
+    <div id="campoMalus">
+      <div class="section-header">❌ Motivo del malus</div>
+      <input type="text" id="motivoMalus" placeholder="Motivo del malus"><br><br>
+    </div>
+
+    <button onclick="assegnaPunti()">✅ Conferma</button>
+  </div>
+
+  <script>
+    const menu = document.getElementById('squadreMenu');
+    const campoMalus = document.getElementById('campoMalus');
+    const squadre = JSON.parse(localStorage.getItem('squadre')) || [];
+
+    // Popola il menu a tendina separato in due gruppi (Elementari e Medie)
+    const elementariList = document.getElementById('elementari');
+    const medieList = document.getElementById('medie');
+
+    squadre.forEach((s, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      option.textContent = s.nome;
+
+      if (s.categoria === 'elementari') {
+        elementariList.appendChild(option);
+      } else if (s.categoria === 'medie') {
+        medieList.appendChild(option);
+      }
+    });
+
+    // Mostra campo malus se punti < 0
+    document.getElementById('punti').addEventListener('input', function() {
+      campoMalus.style.display = this.value < 0 ? 'block' : 'none';
+    });
+
+    function assegnaPunti() {
+      const index = menu.value;
+      const punti = parseInt(document.getElementById('punti').value);
+      const nome = document.getElementById('nomeAssegnatore').value;
+
+      if (!nome) {
+        alert('Inserisci il tuo nome');
+        return;
+      }
+
+      // Aggiorna i punti
+      squadre[index].punti = (squadre[index].punti || 0) + punti;
+      localStorage.setItem('squadre', JSON.stringify(squadre));
+
+      const data = new Date().toLocaleString();
+
+      // Log accessi punti
+      const logAccessiPunti = JSON.parse(localStorage.getItem('logAccessiPunti')) || [];
+      logAccessiPunti.push({
+        squadra: squadre[index].nome,
+        punti,
+        nome,
+        data
+      });
+      localStorage.setItem('logAccessiPunti', JSON.stringify(logAccessiPunti));
+
+      // Se è un malus, salva nel registro
+      if (punti < 0) {
+        const motivo = document.getElementById('motivoMalus').value;
+        const logMalus = JSON.parse(localStorage.getItem('logMalus')) || [];
+        logMalus.push({
+          squadra: squadre[index].nome,
+          punti,
+          motivo,
+          nome,
+          data
+        });
+        localStorage.setItem('logMalus', JSON.stringify(logMalus));
+      }
+
+      alert('Punti aggiornati con successo!');
+      location.reload();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Grest</title>
+  <style>
+    /* Reset di base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Corpo della pagina */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2; /* Colore chiaro per il fondo */
+      text-align: center;
+      color: #4B0082;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://cdn.pixabay.com/photo/2016/06/08/13/14/roman-1449872_960_720.jpg'); /* Immagine evocativa dell'antica Roma */
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Titolo della pagina */
+    h1 {
+      font-size: 3em;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      font-weight: bold;
+    }
+
+    /* Contenitore principale */
+    .container {
+      background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco con trasparenza */
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 60%;
+      text-align: center;
+    }
+
+    /* Pulsante personalizzato */
+    button {
+      background-color: #FF6347;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 15px 30px;
+      margin: 15px;
+      width: 60%;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #FF4500;
+      transform: scale(1.05); /* Leggero ingrandimento al passaggio del mouse */
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    /* Icone ed emoji */
+    .emoji {
+      font-size: 1.8em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* Effetti per il bottone al passaggio del mouse */
+    button:hover .emoji {
+      transform: scale(1.2); /* Aumenta la dimensione dell'emoji quando si passa sopra */
+    }
+
+    /* Sezione dei pulsanti */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Sezione con il logo o l'immagine di sfondo */
+    .logo {
+      font-size: 2em;
+      color: #FF6347;
+      margin-bottom: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏛️ Gestione Grest 🏛️</h1>
+    <div class="logo">Grest: L'Era dell'Imperium</div>
+    <div class="button-container">
+      <button onclick="location.href='verifica.html'"><span class="emoji">📝</span> Assegnazione Punti</button>
+      <button onclick="location.href='classifica.html'"><span class="emoji">📊</span> Classifica</button>
+      <button onclick="location.href='calendario.html'"><span class="emoji">📅</span> Calendario</button>
+      <button onclick="location.href='logmalus.html'"><span class="emoji">⚖️</span> Malus</button>
+    </div>
+  </div>
+</body>
+</html>

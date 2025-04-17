@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Creazione Squadre - Grest Roma Antica</title>
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+      font-family: 'Georgia', serif;
+      color: #4b2e00;
+      padding: 20px;
+      background-color: #f9f1dc;
+    }
+    h2 {
+      color: #a60000;
+      border-bottom: 2px solid #a60000;
+      padding-bottom: 5px;
+    }
+    input, select, button {
+      font-family: 'Georgia', serif;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #a67c00;
+      background-color: #fff6e0;
+    }
+    button {
+      background-color: #c69c6d;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b5895b;
+    }
+    .squadra {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff6e0;
+      margin-bottom: 5px;
+      padding: 10px;
+      border-left: 5px solid #a60000;
+    }
+    .remove {
+      cursor: pointer;
+      color: red;
+      font-weight: bold;
+    }
+    #eliminaTuttoBtn {
+      margin-top: 20px;
+      background-color: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>🏛️ Creazione Squadre</h2>
+  
+  <input type="text" id="nomeSquadra" placeholder="Nome Squadra">
+  <select id="categoria">
+    <option value="elementari">Elementari</option>
+    <option value="medie">Medie</option>
+  </select>
+  <button onclick="aggiungiSquadra()">Aggiungi</button>
+
+  <h3>Squadre Registrate</h3>
+  <ul id="listaSquadre"></ul>
+
+  <!-- Tasto per eliminare tutte le squadre -->
+  <button id="eliminaTuttoBtn" onclick="eliminaTutto()">Elimina Tutto</button>
+
+  <script>
+    // Carica la lista delle squadre dal localStorage
+    let squadre = JSON.parse(localStorage.getItem('squadre')) || [];
+    const listaSquadre = document.getElementById('listaSquadre');
+
+    // Funzione per aggiornare la lista delle squadre
+    function aggiornaLista() {
+      listaSquadre.innerHTML = ''; // Pulisce la lista prima di aggiornarla
+
+      squadre.forEach((s, index) => {
+        const li = document.createElement('li');
+        li.classList.add('squadra');
+        li.textContent = `${s.nome} (${s.categoria})`;
+
+        // Crea il tasto "X" per rimuovere la squadra
+        const removeButton = document.createElement('span');
+        removeButton.textContent = '❌';
+        removeButton.classList.add('remove');
+        removeButton.onclick = function() {
+          // Mostra un messaggio di conferma prima di rimuovere
+          if (confirm(`Sei sicuro di voler rimuovere la squadra "${s.nome}"?`)) {
+            // Rimuove la squadra dal localStorage e dalla lista
+            squadre.splice(index, 1);
+            localStorage.setItem('squadre', JSON.stringify(squadre)); // Salva la nuova lista nel localStorage
+            aggiornaLista(); // Ricarica la lista aggiornata
+          }
+        };
+
+        li.appendChild(removeButton);
+        listaSquadre.appendChild(li);
+      });
+    }
+
+    // Funzione per aggiungere una squadra
+    function aggiungiSquadra() {
+      const nome = document.getElementById('nomeSquadra').value;
+      const categoria = document.getElementById('categoria').value;
+      if (nome) {
+        // Aggiungi la nuova squadra all'array delle squadre
+        squadre.push({ nome, categoria, punti: 0 });
+        localStorage.setItem('squadre', JSON.stringify(squadre)); // Salva l'array nel localStorage
+        aggiornaLista(); // Ricarica la lista con la nuova squadra
+        document.getElementById('nomeSquadra').value = ''; // Pulisci il campo di inserimento
+      }
+    }
+
+    // Funzione per reindirizzare alla pagina di eliminazione
+    function eliminaTutto() {
+      window.location.href = 'elimina.html'; // Reindirizza alla pagina di eliminazione
+    }
+
+    // Inizializza la lista delle squadre
+    aggiornaLista();
+  </script>
+</body>
+</html>

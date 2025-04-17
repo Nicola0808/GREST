@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classifica</title>
+  <style>
+    /* Reset di base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Corpo della pagina */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2; /* Colore chiaro per il fondo */
+      text-align: center;
+      color: #4B0082;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://cdn.pixabay.com/photo/2016/06/08/13/14/roman-1449872_960_720.jpg'); /* Immagine evocativa dell'antica Roma */
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+
+    /* Contenitore principale */
+    .container {
+      background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco con trasparenza */
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 70%;
+      text-align: center;
+    }
+
+    /* Titoli */
+    h2 {
+      font-size: 2.5em;
+      color: #FF6347;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      font-weight: bold;
+    }
+
+    /* Lista delle squadre */
+    ul {
+      list-style-type: none;
+      margin: 20px 0;
+      padding: 0;
+      font-size: 1.5em;
+      color: #333;
+      text-align: left;
+      padding-left: 30px;
+    }
+
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    li:hover {
+      background-color: #FF6347;
+      color: white;
+      transform: translateX(10px);
+    }
+
+    /* Sezione delle emoji */
+    .emoji {
+      font-size: 2em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* Box di confereza */
+    .confirmation {
+      font-size: 1.2em;
+      color: #2e2e2e;
+      margin-top: 20px;
+    }
+
+    .logo {
+      font-size: 2.2em;
+      color: #FF6347;
+      margin-bottom: 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><span class="emoji">🏆</span> Classifica Elementari <span class="emoji">🏆</span></h2>
+    <ul id="elementari"></ul>
+
+    <h2><span class="emoji">📚</span> Classifica Medie <span class="emoji">📚</span></h2>
+    <ul id="medie"></ul>
+  </div>
+
+  <script>
+    const squadre = JSON.parse(localStorage.getItem('squadre')) || [];
+    const elemList = document.getElementById('elementari');
+    const medList = document.getElementById('medie');
+
+    const elementari = squadre
+      .filter(s => s.categoria === 'elementari')
+      .sort((a, b) => b.punti - a.punti);
+
+    const medie = squadre
+      .filter(s => s.categoria === 'medie')
+      .sort((a, b) => b.punti - a.punti);
+
+    elementari.forEach(s => {
+      const li = document.createElement('li');
+      li.textContent = `${s.nome}: ${s.punti} punti`;
+      elemList.appendChild(li);
+    });
+
+    medie.forEach(s => {
+      const li = document.createElement('li');
+      li.textContent = `${s.nome}: ${s.punti} punti`;
+      medList.appendChild(li);
+    });
+  </script>
+</body>
+</html>

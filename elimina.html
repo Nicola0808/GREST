@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Elimina Squadre - Grest Roma Antica</title>
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+      font-family: 'Georgia', serif;
+      color: #4b2e00;
+      padding: 20px;
+      background-color: #f9f1dc;
+    }
+    h2 {
+      color: #a60000;
+      border-bottom: 2px solid #a60000;
+      padding-bottom: 5px;
+    }
+    input, button {
+      font-family: 'Georgia', serif;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #a67c00;
+      background-color: #fff6e0;
+    }
+    button {
+      background-color: #c69c6d;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b5895b;
+    }
+  </style>
+</head>
+<body>
+  <h2>⚠️ Conferma Eliminazione</h2>
+  
+  <p>Per eliminare tutte le squadre, inserisci la password:</p>
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="verificaPassword()">Conferma Eliminazione</button>
+
+  <script>
+    function verificaPassword() {
+      const password = document.getElementById('password').value;
+
+      if (password === "Nicola") {
+        // Se la password è corretta, elimina tutte le squadre
+        localStorage.removeItem('squadre'); // Rimuove tutte le squadre dal localStorage
+        alert("Tutte le squadre sono state eliminate.");
+        window.location.href = 'creazionesquadre.html'; // Torna alla pagina di creazione delle squadre
+      } else {
+        alert("Password errata!");
+      }
+    }
+  </script>
+</body>
+</html>

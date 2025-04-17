@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Log Accessi Punti</title>
+</head>
+<body>
+  <h2>Log Accessi Punti</h2>
+  <ul id="logList"></ul>
+
+  <script>
+    const logList = document.getElementById('logList');
+    const logAccessiPunti = JSON.parse(localStorage.getItem('logAccessiPunti')) || [];
+
+    logAccessiPunti.forEach(entry => {
+      const li = document.createElement('li');
+      li.textContent = `${entry.data} - ${entry.nome} ha assegnato ${entry.punti} punti alla squadra ${entry.squadra}`;
+      logList.appendChild(li);
+    });
+  </script>
+</body>
+</html>
