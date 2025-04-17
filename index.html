@@ -97,6 +97,29 @@
       text-transform: uppercase;
       letter-spacing: 2px;
     }
+
+    /* Stile per l'input della password */
+    .password-container {
+      margin-top: 20px;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: 2px solid #4B0082;
+      background-color: #f9f9f9;
+    }
+
+    .password-button {
+      background-color: #32CD32;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -109,6 +132,25 @@
       <button onclick="location.href='calendario.html'"><span class="emoji">📅</span> Calendario</button>
       <button onclick="location.href='logmalus.html'"><span class="emoji">⚖️</span> Malus</button>
     </div>
+    
+    <!-- Sezione per il pulsante con password per creare squadre -->
+    <div class="password-container">
+      <input type="password" id="password" placeholder="Inserisci la password per accedere alla creazione squadre" />
+      <button class="password-button" onclick="verificaPassword()">Accedi a Creazione Squadre</button>
+      <div id="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
   </div>
+
+  <script>
+    function verificaPassword() {
+      const password = document.getElementById('password').value;
+
+      if (password === "130612") {
+        window.location.href = 'creazionesquadre.html';
+      } else {
+        document.getElementById('error-message').textContent = "Password errata!";
+      }
+    }
+  </script>
 </body>
 </html>
