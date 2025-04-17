@@ -120,6 +120,16 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
+    /* Pulsanti per accedere ai log */
+    .log-buttons {
+      margin-top: 20px;
+    }
+
+    /* Pulsante per la creazione delle squadre */
+    .creazione-squadre-button {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -135,9 +145,16 @@
     
     <!-- Sezione per il pulsante con password per creare squadre -->
     <div class="password-container">
-      <input type="password" id="password" placeholder="Inserisci la password per accedere alla creazione squadre" />
-      <button class="password-button" onclick="verificaPassword()">Accedi a Creazione Squadre</button>
+      <input type="password" id="password" placeholder="Inserisci la password per accedere" />
+      <button class="password-button" onclick="verificaPassword()">Accedi</button>
       <div id="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+    <!-- Sezione per i pulsanti di accesso ai log e creazione delle squadre -->
+    <div class="log-buttons" style="display: none;">
+      <button onclick="accediLog('logaccessiPunti.html')">Accedi a Log Accessi Punti</button>
+      <button onclick="accediLog('logmalus.html')">Accedi a Log Malus</button>
+      <button class="creazione-squadre-button" onclick="accediLog('creazionesquadre.html')">Accedi a Creazione Squadre</button>
     </div>
   </div>
 
@@ -145,11 +162,19 @@
     function verificaPassword() {
       const password = document.getElementById('password').value;
 
+      // Verifica se la password è corretta
       if (password === "061208") {
-        window.location.href = 'creazionesquadre.html';
+        // Mostra i pulsanti per accedere ai log e alla creazione delle squadre
+        document.querySelector('.log-buttons').style.display = 'block';
+        // Nascondi il pulsante di login
+        document.querySelector('.password-container').style.display = 'none';
       } else {
         document.getElementById('error-message').textContent = "Password errata!";
       }
+    }
+
+    function accediLog(page) {
+      window.location.href = page;
     }
   </script>
 </body>
